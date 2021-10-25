@@ -7,8 +7,8 @@ const TaskList = ({ status, tasks = [] }) => {
       <div className="task-list-title">
         <strong>{status}</strong>
       </div>
-      {tasks.forEach((task) => {
-        <Task key={task.id} task={task}></Task>;
+      {tasks.map((task) => {
+        return <Task key={task.id} task={task}></Task>;
       })}
     </div>
   );
