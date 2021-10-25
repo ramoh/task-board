@@ -58,6 +58,7 @@ hr {
 /* TaskList */
 .new-task-form {
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .tasks {
@@ -93,13 +94,19 @@ hr {
 
 .task-lists {
   display: flex;
-  justify-content: space-between;
+
+  justify-content: space-evenly;
 }
 
 .task-list {
-  width: 300px;
 }
 
 .task-list-title {
   margin-bottom: 20px;
+}
+
+.task-list-header {
+  display: flex;
+
+  justify-content: end;
 }
