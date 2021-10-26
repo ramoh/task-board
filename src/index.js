@@ -6,8 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import tasks from "./reducers";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { devToolsEnhancer } from "redux-devtools-extension";
 
-const store = createStore(tasks);
+const store = createStore(tasks, devToolsEnhancer());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -94,10 +94,12 @@ hr {
 
 .task-lists {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .task-list {
+  min-width: 300px;
 }
 
 .task-list-title {
