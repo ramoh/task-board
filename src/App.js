@@ -1,7 +1,8 @@
 import "./App.css";
 import TaskPage from "./components/TasksPage";
 import { connect } from "react-redux";
-import { createTask, editTask } from "./actions";
+import { createTask, editTask, fetchTasks } from "./actions";
+import { useEffect } from "react";
 
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +15,12 @@ function App(props) {
   const onCreateTask = ({ title, description }) => {
     props.dispatch(createTask({ title, description }));
   };
+
+  // Whenver components load
+  useEffect(() => {
+    console.log("Fetching the tasks from the server");
+    props.dispatch(fetchTasks());
+  }, []);
 
   const onStatusChange = (id, status) => {
     props.dispatch(editTask(id, { status }));
