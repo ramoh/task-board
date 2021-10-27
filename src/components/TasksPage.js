@@ -4,6 +4,7 @@ import TaskList from "./TaskList";
 const TASK_STATUSES = ["Unstarted", "In Progress", "Completed"];
 const TaskPage = ({
   tasks = [],
+  isLoading = false,
   onCreateTask = (f) => f,
   onStatusChange = (f) => f,
 }) => {
@@ -48,6 +49,10 @@ const TaskPage = ({
       );
     });
   };
+
+  if (isLoading) {
+    return <div className="tasks-loading">Loading....</div>;
+  }
 
   return (
     <div className="tasks">

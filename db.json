@@ -4,25 +4,37 @@
       "id": 1,
       "title": "Learn Redux",
       "description": "The store, actions, and reducers, oh my!",
-      "status": "Completed"
+      "status": "Unstarted"
     },
     {
       "id": 2,
       "title": "Peace on Earth",
       "description": "No big deal.",
-      "status": "Completed"
+      "status": "Unstarted"
     },
     {
       "id": 3,
       "title": "Create Facebook for dogs",
       "description": "The hottest new social network",
-      "status": "Completed"
+      "status": "In Progress"
     },
     {
       "id": 4,
       "title": "Bring millk",
       "description": "Bring milk for piku",
       "status": "Completed"
+    },
+    {
+      "title": "Bango",
+      "description": "this is bango",
+      "status": "Completed",
+      "id": 5
+    },
+    {
+      "title": "Just a thing",
+      "description": "test",
+      "status": "Completed",
+      "id": 6
     }
   ]
 }

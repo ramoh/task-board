@@ -5,8 +5,10 @@ import { createTask, editTask, fetchTasks } from "./actions";
 import { useEffect } from "react";
 
 const mapStateToProps = (state) => {
+  const { tasks, isLoading } = state.tasks;
   return {
-    tasks: state.tasks,
+    tasks,
+    isLoading,
   };
 };
 
@@ -29,6 +31,7 @@ function App(props) {
     <div className="main-content">
       <TaskPage
         tasks={props.tasks}
+        isLoading={props.isLoading}
         onCreateTask={onCreateTask}
         onStatusChange={onStatusChange}
       />

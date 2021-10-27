@@ -3,14 +3,24 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import tasks from "./reducers";
+import tasksReducer from "./reducers";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 
 import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(tasks, composeWithDevTools(applyMiddleware(thunk)));
+const rootReducer = (state = {}, action) => {
+  const tasks = tasksReducer(state.tasks, action);
+  return {
+    tasks,
+  };
+};
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk)),
+);
 
 ReactDOM.render(
   <Provider store={store}>
