@@ -48,8 +48,12 @@ hr {
 }
 
 /* layout */
+.container {
+  height: 100%;
+}
+
 .main-content {
-  background-color: #fafafa;
+  background-color: #f2f2f2;
   width: 100%;
   height: 100%;
   padding-top: 20px;
@@ -103,7 +107,7 @@ hr {
 }
 
 .task-list-title {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .task-list-header {
@@ -111,4 +115,18 @@ hr {
   display: flex;
 
   justify-content: end;
+}
+.tasks-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.flash-error {
+  text-align: center;
+  padding: 25px;
+  background: #f2dede;
+  border-color: #ebcccc;
+  color: #a94442;
 }
