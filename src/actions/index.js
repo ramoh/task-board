@@ -33,7 +33,7 @@ function editTaskSucceeded(task) {
 
 export function editTask(id, params = {}) {
   return (dispatch, getState) => {
-    const task = getTaskById(getState().tasks, id);
+    const task = getTaskById(getState().tasks.tasks, id);
     const updatedTask = Object.assign({}, task, params);
 
     api
@@ -58,14 +58,29 @@ function fetchTasksSucceded(tasks) {
 export function fetchTasks() {
   return (dispatch) => {
     dispatch(fetchTasksStarted());
-    api.fetchTasks().then((resp) => {
-      setTimeout(() => dispatch(fetchTasksSucceded(resp.data)), 2000);
-    });
+    api
+      .fetchTasks()
+      .then((resp) => {
+        setTimeout(() => dispatch(fetchTasksSucceded(resp.data)), 2000);
+        // throw new Error("Oh no! Unable to fetch tasks!");
+      })
+      .catch((err) => {
+        dispatch(fetchTasksFailed(err.message));
+      });
   };
 }
 
 function fetchTasksStarted() {
   return {
     type: "FETCH_TASKS_STARTED",
+  };
+}
+
+function fetchTasksFailed(error) {
+  return {
+    type: "FETCH_TASKS_FAILED",
+    payload: {
+      error,
+    },
   };
 }

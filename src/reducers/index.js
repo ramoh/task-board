@@ -1,9 +1,17 @@
 const intialState = {
   tasks: [],
   isLoading: false,
+  error: null,
 };
 const tasks = (state = intialState, action) => {
   switch (action.type) {
+    case "FETCH_TASKS_FAILED": {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
+      };
+    }
     case "FETCH_TASKS_STARTED": {
       return {
         ...state,

@@ -10,13 +10,13 @@
       "id": 2,
       "title": "Peace on Earth",
       "description": "No big deal.",
-      "status": "Unstarted"
+      "status": "In Progress"
     },
     {
       "id": 3,
       "title": "Create Facebook for dogs",
       "description": "The hottest new social network",
-      "status": "In Progress"
+      "status": "Completed"
     },
     {
       "id": 4,
@@ -39,8 +39,14 @@
     {
       "title": "Just a thing",
       "description": "adn",
-      "status": "Unstarted",
+      "status": "In Progress",
       "id": 7
+    },
+    {
+      "title": "Learn music",
+      "description": "and this is musix",
+      "status": "In Progress",
+      "id": 8
     }
   ]
 }
