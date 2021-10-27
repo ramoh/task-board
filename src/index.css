@@ -99,7 +99,7 @@ hr {
 }
 
 .task-list {
-  min-width: 300px;
+  width: 300px;
 }
 
 .task-list-title {
@@ -107,6 +107,7 @@ hr {
 }
 
 .task-list-header {
+  margin-bottom: 10px;
   display: flex;
 
   justify-content: end;

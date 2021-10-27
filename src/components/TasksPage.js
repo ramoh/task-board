@@ -51,7 +51,7 @@ const TaskPage = ({
 
   return (
     <div className="tasks">
-      <div className="task-list">
+      <div>
         <div className="task-list-header">
           <button className="button button-default" onClick={toggleForm}>
             + New Task
