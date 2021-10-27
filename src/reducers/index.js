@@ -1,5 +1,4 @@
 const tasks = (state = { tasks: [] }, action) => {
-  debugger;
   switch (action.type) {
     case "CREATE_TASK": {
       return { tasks: state.tasks.concat(action.payload) };
