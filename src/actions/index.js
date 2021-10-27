@@ -5,15 +5,20 @@ export function uniqueId() {
   return _id++;
 }
 
-export function createTask({ title, description }) {
+function createTaskSucceeded(task) {
   return {
-    type: "CREATE_TASK",
+    type: "CREATE_TASK_SUCCEEDED",
     payload: {
-      id: uniqueId(),
-      title,
-      description,
-      status: "Unstarted",
+      task,
     },
+  };
+}
+
+export function createTask({ title, description, status = "Unstarted" }) {
+  return (dispatch) => {
+    api.createTask({ title, description, status }).then((resp) => {
+      dispatch(createTaskSucceeded(resp.data));
+    });
   };
 }
 
@@ -27,7 +32,7 @@ export function editTask(id, params = {}) {
   };
 }
 
-export function fetchTasksSucceded(tasks) {
+function fetchTasksSucceded(tasks) {
   return {
     type: "FETCH_TASKS_SUCCEDED",
     payload: {
