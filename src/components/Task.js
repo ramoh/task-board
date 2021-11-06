@@ -17,6 +17,7 @@ const Task = ({ task, onStatusChange = (f) => f }) => {
             </option>
           ))}
         </select>
+        <button id="delete-task">X</button>
       </div>
       <hr />
       <div className="task-body">{task.description}</div>

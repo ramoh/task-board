@@ -4,7 +4,7 @@
       "id": 1,
       "title": "Learn Redux",
       "description": "The store, actions, and reducers, oh my!",
-      "status": "Unstarted"
+      "status": "In Progress"
     },
     {
       "id": 2,
@@ -16,37 +16,25 @@
       "id": 3,
       "title": "Create Facebook for dogs",
       "description": "The hottest new social network",
-      "status": "Completed"
+      "status": "In Progress"
     },
     {
       "id": 4,
       "title": "Bring millk",
       "description": "Bring milk for piku",
-      "status": "Completed"
+      "status": "Unstarted"
     },
     {
-      "title": "Bango",
-      "description": "this is bango",
-      "status": "Completed",
+      "title": "Milk",
+      "description": "Bring Milk",
+      "status": "In Progress",
       "id": 5
     },
     {
-      "title": "Just a thing",
-      "description": "test",
-      "status": "Completed",
+      "title": "Toy",
+      "description": "An TOy is rqui",
+      "status": "Unstarted",
       "id": 6
-    },
-    {
-      "title": "Just a thing",
-      "description": "adn",
-      "status": "In Progress",
-      "id": 7
-    },
-    {
-      "title": "Learn music",
-      "description": "and this is musix",
-      "status": "In Progress",
-      "id": 8
     }
   ]
 }
