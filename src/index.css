@@ -86,10 +86,8 @@ hr {
 .task-header {
   padding: 5px;
   display: flex;
-  justify-content: space-around;
   flex-wrap: nowrap;
   align-content: stretch;
-  align-items: stretch;
   background-color: #dc9b76;
 }
 
