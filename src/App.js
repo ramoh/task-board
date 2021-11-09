@@ -1,7 +1,7 @@
 import "./App.css";
 import TaskPage from "./components/TasksPage";
 import { connect } from "react-redux";
-import { createTask, editTask, fetchTasks } from "./actions";
+import { createTask, editTask, fetchTasks, deleteTask } from "./actions";
 import { useEffect } from "react";
 import FlashMessage from "./components/FlashMessage";
 
@@ -29,6 +29,11 @@ function App(props) {
   const onStatusChange = (id, status) => {
     props.dispatch(editTask(id, { status }));
   };
+
+  const onDelete = (id) => {
+    console.log(`Delete the variable with id ${id}`);
+    props.dispatch(deleteTask(id));
+  };
   return (
     <div className="container">
       {props.error && <FlashMessage message={props.error} />}
@@ -38,6 +43,7 @@ function App(props) {
           isLoading={props.isLoading}
           onCreateTask={onCreateTask}
           onStatusChange={onStatusChange}
+          onDelete={onDelete}
         />
       </div>
     </div>

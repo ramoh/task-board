@@ -22,6 +22,21 @@ export function createTask({ title, description, status = "Unstarted" }) {
   };
 }
 
+function deleteTaskSucceeded(id) {
+  return {
+    type: "DELETE_TASK_SUCCEEDED",
+    payload: {
+      id,
+    },
+  };
+}
+
+export function deleteTask(id) {
+  return (dispatch) => {
+    api.deleteTask(id).then(() => dispatch(deleteTaskSucceeded(id)));
+  };
+}
+
 function editTaskSucceeded(task) {
   return {
     type: "EDIT_TASK_SUCCEEDED",

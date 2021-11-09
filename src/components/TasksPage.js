@@ -7,6 +7,7 @@ const TaskPage = ({
   isLoading = false,
   onCreateTask = (f) => f,
   onStatusChange = (f) => f,
+  onDelete = (f) => f,
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -45,6 +46,7 @@ const TaskPage = ({
           status={status}
           tasks={statusTasks}
           onStatusChange={onStatusChange}
+          onDelete={onDelete}
         />
       );
     });

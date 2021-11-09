@@ -31,6 +31,15 @@ const tasks = (state = intialState, action) => {
         tasks: state.tasks.concat(action.payload.task),
       };
     }
+    case "DELETE_TASK_SUCCEEDED": {
+      const { payload } = action;
+
+      const nextTasks = state.tasks.filter((task) => task.id !== payload.id);
+      return {
+        ...state,
+        tasks: nextTasks,
+      };
+    }
     case "EDIT_TASK_SUCCEEDED": {
       const { payload } = action;
 

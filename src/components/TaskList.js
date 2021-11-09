@@ -1,7 +1,12 @@
 import React from "react";
 import Task from "./Task";
 
-const TaskList = ({ status, tasks = [], onStatusChange = (f) => f }) => {
+const TaskList = ({
+  status,
+  tasks = [],
+  onStatusChange = (f) => f,
+  onDelete = (f) => f,
+}) => {
   return (
     <div className="task-list">
       <div className="task-list-title">
@@ -13,6 +18,7 @@ const TaskList = ({ status, tasks = [], onStatusChange = (f) => f }) => {
             key={task.id}
             task={task}
             onStatusChange={onStatusChange}
+            onDelete={onDelete}
           ></Task>
         );
       })}
