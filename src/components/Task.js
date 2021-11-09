@@ -9,15 +9,18 @@ const Task = ({ task, onStatusChange = (f) => f }) => {
   return (
     <div className="task">
       <div className="task-header">
-        <div>{task.title}</div>
-        <select value={task.status} onChange={onStatusChangeInternal}>
-          {TASK_STATUSES.map((status) => (
-            <option key={status} value={status}>
-              {status}
-            </option>
-          ))}
-        </select>
-        <button id="delete-task">X</button>
+        <div class="task-header-start">{task.title}</div>
+        <div className="task-header-tail">
+          <select value={task.status} onChange={onStatusChangeInternal}>
+            {TASK_STATUSES.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+
+          <button id="delete-task">X</button>
+        </div>
       </div>
       <hr />
       <div className="task-body">{task.description}</div>
