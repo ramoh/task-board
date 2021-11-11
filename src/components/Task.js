@@ -10,6 +10,9 @@ const Task = ({ task, onStatusChange = (f) => f, onDelete = (f) => f }) => {
   const onDeleteInternal = () => {
     onDelete(task.id);
   };
+
+  const created = new Date(task.created);
+  const lastModified = new Date(task.lastModified);
   return (
     <div className="task">
       <div className="task-header">
@@ -27,6 +30,18 @@ const Task = ({ task, onStatusChange = (f) => f, onDelete = (f) => f }) => {
             X
           </button>
         </div>
+      </div>
+      <div className="task-dates">
+        <div>Created: </div>
+        <div>{`${created.getDate()}/${
+          created.getMonth() + 1
+        }/${created.getFullYear()}, ${created.getHours()}:${created.getMinutes()}`}</div>
+      </div>
+      <div className="task-dates">
+        <div>Last Modfied:</div>
+        <div>{`${lastModified.getDate()}/${
+          lastModified.getMonth() + 1
+        }/${lastModified.getFullYear()}, ${lastModified.getHours()}:${lastModified.getMinutes()}`}</div>
       </div>
       <hr />
       <div className="task-body">

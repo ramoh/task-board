@@ -90,7 +90,19 @@ hr {
   align-content: stretch;
   background-color: #dc9b76;
 }
-
+.task-dates {
+  padding: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  background-color: #dc9b76;
+  font-size: medium;
+  font-weight: 500;
+  font-family: monospace;
+}
+.task-dates > div {
+  width: 50%;
+}
 .task-header-tail {
   display: flex;
   flex-direction: row;

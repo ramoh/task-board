@@ -15,16 +15,16 @@ function createTaskSucceeded(task) {
 }
 
 export function createTask({ title, description, status = "Unstarted" }) {
-  const creationDate = new Date();
-  const lastModifiedDate = new Date();
+  const created = new Date();
+  const lastModified = new Date();
   return (dispatch) => {
     api
       .createTask({
         title,
         description,
         status,
-        creationDate,
-        lastModifiedDate,
+        created,
+        lastModified,
       })
       .then((resp) => {
         dispatch(createTaskSucceeded(resp.data));
@@ -58,7 +58,7 @@ function editTaskSucceeded(task) {
 
 export function editTask(id, params = {}) {
   return (dispatch, getState) => {
-    params.lastModifiedDate = new Date();
+    params.lastModified = new Date();
     const task = getTaskById(getState().tasks.tasks, id);
     const updatedTask = Object.assign({}, task, params);
 
