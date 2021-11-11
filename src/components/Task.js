@@ -29,7 +29,9 @@ const Task = ({ task, onStatusChange = (f) => f, onDelete = (f) => f }) => {
         </div>
       </div>
       <hr />
-      <div className="task-body">{task.description}</div>
+      <div className="task-body">
+        <div>{task.description}</div>
+      </div>
     </div>
   );
 };
