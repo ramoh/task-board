@@ -1,9 +1,4 @@
 import * as api from "../api";
-let _id = 1;
-
-export function uniqueId() {
-  return _id++;
-}
 
 function createTaskSucceeded(task) {
   return {
