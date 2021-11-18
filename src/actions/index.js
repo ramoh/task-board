@@ -6,6 +6,14 @@ function createTaskSucceeded(task) {
     payload: {
       task,
     },
+    meta: {
+      analytics: {
+        event: "create-task",
+        data: {
+          id: task.id,
+        },
+      },
+    },
   };
 }
 
