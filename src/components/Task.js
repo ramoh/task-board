@@ -13,9 +13,18 @@ const Task = ({ task, onStatusChange = (f) => f, onDelete = (f) => f }) => {
 
   const created = new Date(task.created);
   const lastModified = new Date(task.lastModified);
+  const cssStatus =
+    task.status === "Unstarted"
+      ? "task-not-started "
+      : task.status === "In Progress"
+      ? "task-in-progress"
+      : "task-complete";
+
+  const taskHeaderCss = `task-header ${cssStatus}`;
+  const taskDateCss = `task-dates ${cssStatus}`;
   return (
     <div className="task">
-      <div className="task-header">
+      <div className={taskHeaderCss}>
         <div className="task-header-start">{task.title}</div>
         <div className="task-header-tail">
           <select value={task.status} onChange={onStatusChangeInternal}>
@@ -31,13 +40,13 @@ const Task = ({ task, onStatusChange = (f) => f, onDelete = (f) => f }) => {
           </button>
         </div>
       </div>
-      <div className="task-dates">
+      <div className={taskDateCss}>
         <div>Created: </div>
         <div>{`${created.getDate()}/${
           created.getMonth() + 1
         }/${created.getFullYear()}, ${created.getHours()}:${created.getMinutes()}`}</div>
       </div>
-      <div className="task-dates">
+      <div className={taskDateCss}>
         <div>Last Modfied:</div>
         <div>{`${lastModified.getDate()}/${
           lastModified.getMonth() + 1

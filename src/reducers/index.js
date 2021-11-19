@@ -22,19 +22,19 @@ const tasks = (state = intialState, action) => {
       return {
         ...state,
         isLoading: false,
-        tasks: action.payload.tasks,
+        tasks: action.payload,
       };
     }
     case "CREATE_TASK_SUCCEEDED": {
       return {
         ...state,
-        tasks: state.tasks.concat(action.payload.task),
+        tasks: state.tasks.concat(action.payload),
       };
     }
     case "DELETE_TASK_SUCCEEDED": {
-      const { payload } = action;
-
-      const nextTasks = state.tasks.filter((task) => task.id !== payload.id);
+      const nextTasks = state.tasks.filter(
+        (task) => task.id !== action.payload,
+      );
       return {
         ...state,
         tasks: nextTasks,
@@ -44,7 +44,7 @@ const tasks = (state = intialState, action) => {
       const { payload } = action;
 
       const nextTasks = state.tasks.map((task) => {
-        if (task.id === payload.task.id) return payload.task;
+        if (task.id === payload.id) return payload;
         return task;
       });
       return {
