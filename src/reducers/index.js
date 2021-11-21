@@ -4,6 +4,7 @@ const intialState = {
   error: null,
 };
 const tasks = (state = intialState, action) => {
+  debugger;
   switch (action.type) {
     case "FETCH_TASKS_FAILED": {
       return {

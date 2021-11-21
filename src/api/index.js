@@ -10,7 +10,11 @@ const client = axios.create({
 });
 
 export function fetchTasks() {
-  return client.get("/tasks");
+  // enforce a 5 seconds delay to show loading page
+  var delayedPageLoadPromise = new Promise((reslove, reject) => {
+    setTimeout(() => setTimeout(() => reslove(client.get("/tasks")), 2000));
+  });
+  return delayedPageLoadPromise;
 }
 
 export function createTask(params) {

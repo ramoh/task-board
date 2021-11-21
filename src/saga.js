@@ -1,30 +1,22 @@
-import { fork, take, call, put } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 import { fetchTasks } from "./api";
 
 export default function* rootSaga() {
   console.log("rootSaga reporting for the duty");
-  yield fork(watchFetchTasks);
-  yield fork(watchSomethingElse);
+  yield takeLatest("FETCH_TASKS_STARTED", fetchTasksWatcher);
 }
 
-function* watchFetchTasks() {
-  while (true) {
-    yield take("FETCH_TASKS_STARTED");
-    try {
-      const { data } = yield call(fetchTasks);
-      yield put({
-        type: "FETCH_TASKS_SUCCEDED",
-        payload: { tasks: data },
-      });
-    } catch (e) {
-      yield put({
-        type: "FETCH_TASKS_FAILED",
-        payload: { error: e.message },
-      });
-    }
+function* fetchTasksWatcher() {
+  try {
+    const { data } = yield call(fetchTasks);
+    yield put({
+      type: "FETCH_TASKS_SUCCEDED",
+      payload: { tasks: data },
+    });
+  } catch (e) {
+    yield put({
+      type: "FETCH_TASKS_FAILED",
+      payload: { error: e.message },
+    });
   }
-}
-
-function* watchSomethingElse() {
-  console.log("Watching something else!");
 }
