@@ -12,6 +12,7 @@ function createTaskSucceeded(task) {
 export function createTask({ title, description, status = "Unstarted" }) {
   const created = new Date();
   const lastModified = new Date();
+  const timer = 0;
   return (dispatch) => {
     api
       .createTask({
@@ -20,6 +21,7 @@ export function createTask({ title, description, status = "Unstarted" }) {
         status,
         created,
         lastModified,
+        timer,
       })
       .then((resp) => {
         dispatch(createTaskSucceeded(resp.data));
@@ -57,9 +59,19 @@ export function editTask(id, params = {}) {
     const task = getTaskById(getState().tasks.tasks, id);
     const updatedTask = Object.assign({}, task, params);
 
-    api
-      .editTask(id, updatedTask)
-      .then((resp) => dispatch(editTaskSucceeded(resp.data)));
+    api.editTask(id, updatedTask).then((resp) => {
+      dispatch(editTaskSucceeded(resp.data));
+      if (resp.data.status === "In Progress") {
+        dispatch(progressTimerStart(resp.data.id));
+      }
+    });
+  };
+}
+
+function progressTimerStart(taskId) {
+  return {
+    type: "TIMER_STARTED",
+    payload: { taskId },
   };
 }
 

@@ -4,7 +4,6 @@ const intialState = {
   error: null,
 };
 const tasks = (state = intialState, action) => {
-  debugger;
   switch (action.type) {
     case "FETCH_TASKS_FAILED": {
       return {
@@ -52,6 +51,15 @@ const tasks = (state = intialState, action) => {
         ...state,
         tasks: nextTasks,
       };
+    }
+    case "TIMER_INCREMENT": {
+      const nextTasks = state.tasks.map((task) => {
+        if (task.id === action.payload.taskId) {
+          return { ...task, timer: task.timer + 1 };
+        }
+        return task;
+      });
+      return { ...state, tasks: nextTasks };
     }
     default: {
       return state;

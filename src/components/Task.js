@@ -55,6 +55,7 @@ const Task = ({ task, onStatusChange = (f) => f, onDelete = (f) => f }) => {
       <hr />
       <div className="task-body">
         <div>{task.description}</div>
+        <div className="task-timer">{task.timer}s</div>
       </div>
     </div>
   );
