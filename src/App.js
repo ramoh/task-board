@@ -22,7 +22,6 @@ function App(props) {
 
   // Whenver components load
   useEffect(() => {
-    console.log("Fetching the tasks from the server");
     props.dispatch(fetchTasks());
   }, []);
 

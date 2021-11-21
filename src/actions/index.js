@@ -67,41 +67,8 @@ function getTaskById(tasks, id) {
   return tasks.find((task) => task.id === id);
 }
 
-function fetchTasksSucceded(tasks) {
-  return {
-    type: "FETCH_TASKS_SUCCEDED",
-    payload: {
-      tasks,
-    },
-  };
-}
-
 export function fetchTasks() {
-  return (dispatch) => {
-    dispatch(fetchTasksStarted());
-    api
-      .fetchTasks()
-      .then((resp) => {
-        setTimeout(() => dispatch(fetchTasksSucceded(resp.data)), 2000);
-        // throw new Error("Oh no! Unable to fetch tasks!");
-      })
-      .catch((err) => {
-        dispatch(fetchTasksFailed(err.message));
-      });
-  };
-}
-
-function fetchTasksStarted() {
   return {
     type: "FETCH_TASKS_STARTED",
-  };
-}
-
-function fetchTasksFailed(error) {
-  return {
-    type: "FETCH_TASKS_FAILED",
-    payload: {
-      error,
-    },
   };
 }
