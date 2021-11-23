@@ -1,28 +1,45 @@
-import { takeLatest, call, put, takeEvery, delay } from "redux-saga/effects";
-
+import { channel } from "@redux-saga/core";
+import { call, delay, put, take, takeLatest } from "redux-saga/effects";
 import { fetchTasks } from "./api";
 
 export default function* rootSaga() {
   console.log("rootSaga reporting for the duty");
   yield takeLatest("FETCH_TASKS_STARTED", fetchTasksWatcher);
-  yield takeEvery("TIMER_STARTED", handleProgressTimer);
+  yield takeLastestById(
+    ["TIMER_STARTED", "TIMER_STOPPED"],
+    handleProgressTimer,
+  );
 }
 
-function* handleProgressTimer({ payload }) {
-  debugger;
+function* takeLastestById(actionType, saga) {
+  const channelsMap = {};
   while (true) {
-    yield delay(1000);
-    debugger;
-    yield put({
-      type: "TIMER_INCREMENT",
-      payload: { taskId: payload.taskId },
-    });
+    const action = yield take(actionType);
+    const { taskId } = action.payload;
+
+    if (!channelsMap[taskId]) {
+      channelsMap[taskId] = channel();
+      yield takeLatest(channelsMap[taskId], saga);
+    }
+
+    yield put(channelsMap[taskId], action);
+  }
+}
+
+function* handleProgressTimer({ payload, type }) {
+  if (type === "TIMER_STARTED") {
+    while (true) {
+      yield delay(1000);
+      yield put({
+        type: "TIMER_INCREMENT",
+        payload: { taskId: payload.taskId },
+      });
+    }
   }
 }
 function* fetchTasksWatcher() {
   try {
     const { data } = yield call(fetchTasks);
-    debugger;
     yield put({
       type: "FETCH_TASKS_SUCCEDED",
       payload: { tasks: data },

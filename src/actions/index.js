@@ -64,6 +64,9 @@ export function editTask(id, params = {}) {
       if (resp.data.status === "In Progress") {
         dispatch(progressTimerStart(resp.data.id));
       }
+      if (resp.data.status !== "In Progress") {
+        dispatch(progressTimerStop(resp.data.id));
+      }
     });
   };
 }
@@ -71,6 +74,13 @@ export function editTask(id, params = {}) {
 function progressTimerStart(taskId) {
   return {
     type: "TIMER_STARTED",
+    payload: { taskId },
+  };
+}
+
+function progressTimerStop(taskId) {
+  return {
+    type: "TIMER_STOPPED",
     payload: { taskId },
   };
 }
