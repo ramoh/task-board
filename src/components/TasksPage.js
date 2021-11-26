@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import TaskList from "./TaskList";
 
-const TASK_STATUSES = ["Unstarted", "In Progress", "Completed"];
 const TaskPage = ({
-  tasks = [],
+  tasks = {},
   isLoading = false,
   onCreateTask = (f) => f,
   onStatusChange = (f) => f,
@@ -43,13 +42,13 @@ const TaskPage = ({
   };
 
   const renderTaskList = () => {
-    return TASK_STATUSES.map((status) => {
-      const statusTasks = tasks.filter((task) => task.status === status);
+    return Object.keys(tasks).map((status) => {
+      const tasksByStatus = tasks[status];
       return (
         <TaskList
           key={status}
           status={status}
-          tasks={statusTasks}
+          tasks={tasksByStatus}
           onStatusChange={onStatusChange}
           onDelete={onDelete}
         />

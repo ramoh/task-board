@@ -10,13 +10,13 @@ import {
 } from "./actions";
 import { useEffect } from "react";
 import FlashMessage from "./components/FlashMessage";
-import { getFilteredTasks } from "./reducers";
+import { getGroupedAndFilteredTasks } from "./reducers";
 
 const mapStateToProps = (state) => {
-  const { tasks, isLoading, error, searchTerm } = state.tasks;
+  const { isLoading, error } = state.tasks;
 
   return {
-    tasks: getFilteredTasks(tasks, searchTerm),
+    tasks: getGroupedAndFilteredTasks(state),
     isLoading,
     error,
   };
