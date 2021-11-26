@@ -165,9 +165,12 @@ hr {
 }
 
 .task-list-header {
-  margin-bottom: 10px;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  text-align: right;
+  font-size: 18px;
 }
 .tasks-loading {
   display: flex;

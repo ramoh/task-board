@@ -2,6 +2,7 @@ const intialState = {
   tasks: [],
   isLoading: false,
   error: null,
+  searchTerm: "",
 };
 const tasks = (state = intialState, action) => {
   switch (action.type) {
@@ -61,9 +62,25 @@ const tasks = (state = intialState, action) => {
       });
       return { ...state, tasks: nextTasks };
     }
+    case "FILTER_TASKS": {
+      return {
+        ...state,
+        searchTerm: action.payload.searchTerm,
+      };
+    }
     default: {
       return state;
     }
   }
 };
+/**
+ * Filter the tasks as per search term
+ * @param {array} tasks
+ * @param {String} searchTerm
+ */
+export function getFilteredTasks(tasks, searchTerm) {
+  return tasks.filter((task) => {
+    return task.title.match(new RegExp(searchTerm, "i"));
+  });
+}
 export default tasks;

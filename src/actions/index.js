@@ -94,3 +94,7 @@ export function fetchTasks() {
     type: "FETCH_TASKS_STARTED",
   };
 }
+
+export function filterTasks(searchTerm) {
+  return { type: "FILTER_TASKS", payload: { searchTerm } };
+}

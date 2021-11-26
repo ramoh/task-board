@@ -1,14 +1,22 @@
 import "./App.css";
 import TaskPage from "./components/TasksPage";
 import { connect } from "react-redux";
-import { createTask, editTask, fetchTasks, deleteTask } from "./actions";
+import {
+  createTask,
+  editTask,
+  fetchTasks,
+  deleteTask,
+  filterTasks,
+} from "./actions";
 import { useEffect } from "react";
 import FlashMessage from "./components/FlashMessage";
+import { getFilteredTasks } from "./reducers";
 
 const mapStateToProps = (state) => {
-  const { tasks, isLoading, error } = state.tasks;
+  const { tasks, isLoading, error, searchTerm } = state.tasks;
+
   return {
-    tasks,
+    tasks: getFilteredTasks(tasks, searchTerm),
     isLoading,
     error,
   };
@@ -33,6 +41,10 @@ function App(props) {
     console.log(`Delete the variable with id ${id}`);
     props.dispatch(deleteTask(id));
   };
+
+  const onSearch = (searchTerm) => {
+    props.dispatch(filterTasks(searchTerm));
+  };
   return (
     <div className="container">
       {props.error && <FlashMessage message={props.error} />}
@@ -43,6 +55,7 @@ function App(props) {
           onCreateTask={onCreateTask}
           onStatusChange={onStatusChange}
           onDelete={onDelete}
+          onSearch={onSearch}
         />
       </div>
     </div>

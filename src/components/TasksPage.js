@@ -8,6 +8,7 @@ const TaskPage = ({
   onCreateTask = (f) => f,
   onStatusChange = (f) => f,
   onDelete = (f) => f,
+  onSearch = (f) => f,
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -37,6 +38,10 @@ const TaskPage = ({
 
   const toggleForm = () => setShowNewCardForm(!showNewCardForm);
 
+  const onSearchInternal = (e) => {
+    onSearch(e.target.value);
+  };
+
   const renderTaskList = () => {
     return TASK_STATUSES.map((status) => {
       const statusTasks = tasks.filter((task) => task.status === status);
@@ -60,6 +65,11 @@ const TaskPage = ({
     <div className="tasks">
       <div>
         <div className="task-list-header">
+          <input
+            onChange={onSearchInternal}
+            type="text"
+            placeholder="Search ..."
+          />
           <button className="button button-default" onClick={toggleForm}>
             + New Task
           </button>
