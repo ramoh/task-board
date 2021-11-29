@@ -68,6 +68,7 @@ const TaskPage = ({
             onChange={onSearchInternal}
             type="text"
             placeholder="Search ..."
+            style={{ width: 198 }}
           />
           <button className="button button-default" onClick={toggleForm}>
             + New Task

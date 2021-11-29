@@ -2,13 +2,26 @@ import { createSelector } from "reselect";
 import { TASK_STATUSES } from "../constants";
 
 const intialState = {
-  tasks: [],
+  items: [],
   isLoading: false,
   error: null,
-  searchTerm: "",
 };
-const tasks = (state = intialState, action) => {
+
+export function projects(state = intialState, action) {
   switch (action.type) {
+    case "FETCH_PROJECTS_STARTED": {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case "FETCH_PROJECTS_SUCCEEDED": {
+      return {
+        ...state,
+        isLoading: false,
+        items: action.payload.projects,
+      };
+    }
     case "FETCH_TASKS_FAILED": {
       return {
         ...state,
@@ -30,12 +43,27 @@ const tasks = (state = intialState, action) => {
       };
     }
     case "CREATE_TASK_SUCCEEDED": {
+      const { task } = action.payload;
+      const projectIndex = state.items.findIndex(
+        (project) => project.id === task.projectId,
+      );
+
+      const project = state.items[projectIndex];
+      const nextProject = {
+        ...project,
+        tasks: project.tasks.concat(task),
+      };
       return {
         ...state,
-        tasks: state.tasks.concat(action.payload.task),
+        items: [
+          ...state.items.slice(0, projectIndex),
+          nextProject,
+          ...state.items.slice(projectIndex + 1),
+        ],
       };
     }
     case "DELETE_TASK_SUCCEEDED": {
+      debugger;
       const { payload } = action;
 
       const nextTasks = state.tasks.filter((task) => task.id !== payload.id);
@@ -45,15 +73,31 @@ const tasks = (state = intialState, action) => {
       };
     }
     case "EDIT_TASK_SUCCEEDED": {
-      const { payload } = action;
+      const { task } = action.payload;
 
-      const nextTasks = state.tasks.map((task) => {
-        if (task.id === payload.task.id) return payload.task;
-        return task;
-      });
+      const projectIndex = state.items.findIndex(
+        (project) => project.id === task.projectId,
+      );
+
+      const project = state.items[projectIndex];
+
+      const taskIndex = project.tasks.findIndex((t) => t.id === task.id);
+      const nextProject = {
+        ...project,
+        tasks: [
+          ...project.tasks.slice(0, taskIndex),
+          task,
+          ...project.tasks.slice(taskIndex + 1),
+        ],
+      };
+
       return {
         ...state,
-        tasks: nextTasks,
+        items: [
+          ...state.items.slice(0, projectIndex),
+          nextProject,
+          ...state.items.slice(projectIndex + 1),
+        ],
       };
     }
     case "TIMER_INCREMENT": {
@@ -65,6 +109,26 @@ const tasks = (state = intialState, action) => {
       });
       return { ...state, tasks: nextTasks };
     }
+
+    default: {
+      return state;
+    }
+  }
+}
+
+const initialPageState = {
+  currentProjectId: null,
+  searchTerm: "",
+};
+
+export function page(state = initialPageState, action) {
+  switch (action.type) {
+    case "SET_CURRENT_PROJECT_ID": {
+      return {
+        ...state,
+        currentProjectId: action.payload.id,
+      };
+    }
     case "FILTER_TASKS": {
       return {
         ...state,
@@ -75,18 +139,24 @@ const tasks = (state = intialState, action) => {
       return state;
     }
   }
-};
-
-const getTasks = (state) => {
-  return state.tasks.tasks;
-};
+}
 
 const getSearchTerm = (state) => {
-  return state.tasks.searchTerm;
+  return state.page.searchTerm;
+};
+
+const getTasksByProjectId = (state) => {
+  if (!state.page.currentProjectId) {
+    return [];
+  }
+  const currentProject = state.projects.items.find(
+    (project) => project.id === state.page.currentProjectId,
+  );
+  return currentProject.tasks;
 };
 
 export const getFilteredTasks = createSelector(
-  [getTasks, getSearchTerm],
+  [getTasksByProjectId, getSearchTerm],
   (tasks, searchTerm) => {
     return tasks.filter((task) => {
       return task.title.match(new RegExp(searchTerm, "i"));
@@ -101,8 +171,6 @@ export const getGroupedAndFilteredTasks = createSelector(
     TASK_STATUSES.forEach((status) => {
       grouped[status] = tasks.filter((task) => task.status === status);
     });
-
     return grouped;
   },
 );
-export default tasks;

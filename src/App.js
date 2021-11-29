@@ -1,22 +1,25 @@
-import "./App.css";
-import TaskPage from "./components/TasksPage";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   createTask,
-  editTask,
-  fetchTasks,
   deleteTask,
+  editTask,
+  fetchProjects,
   filterTasks,
+  setCurrentProjectId,
 } from "./actions";
-import { useEffect } from "react";
+import "./App.css";
 import FlashMessage from "./components/FlashMessage";
+import Header from "./components/Header";
+import TaskPage from "./components/TasksPage";
 import { getGroupedAndFilteredTasks } from "./reducers";
 
 const mapStateToProps = (state) => {
-  const { isLoading, error } = state.tasks;
+  const { isLoading, error, items } = state.projects;
 
   return {
     tasks: getGroupedAndFilteredTasks(state),
+    projects: items,
     isLoading,
     error,
   };
@@ -30,7 +33,7 @@ function App(props) {
 
   // Whenver components load
   useEffect(() => {
-    props.dispatch(fetchTasks());
+    props.dispatch(fetchProjects());
   }, []);
 
   const onStatusChange = (id, status) => {
@@ -45,10 +48,18 @@ function App(props) {
   const onSearch = (searchTerm) => {
     props.dispatch(filterTasks(searchTerm));
   };
+
+  const onCurrentProjectChange = (e) => {
+    props.dispatch(setCurrentProjectId(Number(e.target.value)));
+  };
   return (
     <div className="container">
       {props.error && <FlashMessage message={props.error} />}
       <div className="main-content">
+        <Header
+          projects={props.projects}
+          onCurrentProjectChange={onCurrentProjectChange}
+        ></Header>
         <TaskPage
           tasks={props.tasks}
           isLoading={props.isLoading}

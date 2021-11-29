@@ -1,58 +1,34 @@
 {
+  "projects": [
+    {
+      "id": 1,
+      "name": "ShortTerm  Goals"
+    },
+    {
+      "id": 2,
+      "name": "LongTerm   Goals"
+    }
+  ],
   "tasks": [
     {
-      "title": "Task1",
-      "description": "This is task1",
+      "id": 2,
+      "title": "Peace on Earth",
+      "description": "No big deal.",
       "status": "In Progress",
-      "created": "2021-11-21T17:46:20.403Z",
-      "lastModified": "2021-11-26T13:51:51.235Z",
-      "timer": 597,
-      "id": 1
+      "timer": 132,
+      "projectId": 2,
+      "created": "2021-11-27T11:55:17.833Z",
+      "lastModified": "2021-11-27T11:55:17.833Z"
     },
     {
-      "title": "Task2",
-      "description": "This is task2",
+      "id": 3,
+      "title": "Create Facebook for dogs",
+      "description": "The hottest new social network",
       "status": "Completed",
-      "created": "2021-11-21T17:47:38.816Z",
-      "lastModified": "2021-11-26T05:19:58.288Z",
-      "timer": 15,
-      "id": 2
-    },
-    {
-      "title": "Task3",
-      "description": "This is task3",
-      "status": "In Progress",
-      "created": "2021-11-21T17:55:13.380Z",
-      "lastModified": "2021-11-26T13:51:56.975Z",
-      "timer": 36,
-      "id": 3
-    },
-    {
-      "title": "Task4",
-      "description": "This is task no 4",
-      "status": "Unstarted",
-      "created": "2021-11-22T05:16:23.930Z",
-      "lastModified": "2021-11-26T13:51:48.172Z",
-      "timer": 6,
-      "id": 4
-    },
-    {
-      "title": "Milk",
-      "description": "Bring milk for me",
-      "status": "In Progress",
-      "created": "2021-11-26T09:11:35.399Z",
-      "lastModified": "2021-11-26T13:52:01.720Z",
-      "timer": 0,
-      "id": 5
-    },
-    {
-      "title": "Bob",
-      "description": "This is bok",
-      "status": "Unstarted",
-      "created": "2021-11-26T14:27:13.879Z",
-      "lastModified": "2021-11-26T14:27:13.879Z",
-      "timer": 0,
-      "id": 6
+      "timer": 332,
+      "created": "2021-11-27T11:55:17.833Z",
+      "lastModified": "2021-11-27T11:55:17.833Z",
+      "projectId": 1
     }
   ]
 }

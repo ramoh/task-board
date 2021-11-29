@@ -11,7 +11,7 @@
 # production
 /build
 # misc
-.DS_Store
+.DS_Storenested
 .env.local
 .env.development.local
 .env.test.local
