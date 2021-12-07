@@ -1,4 +1,5 @@
 import * as api from "../api";
+import { normalize, schema } from "normalizr";
 
 function createTaskSucceeded(task) {
   return {
@@ -40,7 +41,6 @@ function deleteTaskSucceeded(id) {
 }
 
 export function deleteTask(id) {
-  debugger;
   return (dispatch) => {
     api.deleteTask(id).then(() => dispatch(deleteTaskSucceeded(id)));
   };
@@ -58,11 +58,7 @@ function editTaskSucceeded(task) {
 export function editTask(id, params = {}) {
   return (dispatch, getState) => {
     params.lastModified = new Date();
-    const projectIndex = getState().projects.items.findIndex(
-      (project) => project.id === getState().page.currentProjectId,
-    );
-    const project = getState().projects.items[projectIndex];
-    const task = getTaskById(project.tasks, id);
+    const task = getState().tasks.items[id];
     const updatedTask = Object.assign({}, task, params);
 
     api.editTask(id, updatedTask).then((resp) => {
@@ -91,10 +87,6 @@ function progressTimerStop(taskId) {
   };
 }
 
-function getTaskById(tasks, id) {
-  return tasks.find((task) => task.id === id);
-}
-
 export function fetchTasks() {
   return {
     type: "FETCH_TASKS_STARTED",
@@ -109,10 +101,6 @@ function fetchProjectsStarted(boards) {
   return { type: "FETCH_PROJECTS_STARTED", payload: { boards } };
 }
 
-function fetchProjectsSucceeded(projects) {
-  return { type: "FETCH_PROJECTS_SUCCEEDED", payload: { projects } };
-}
-
 function fetchProjectsFailed(err) {
   return { type: "FETCH_PROJECTS_FAILED", payload: { err } };
 }
@@ -125,7 +113,10 @@ export function fetchProjects() {
       .fetchProjects()
       .then((resp) => {
         const projects = resp.data;
-        dispatch(fetchProjectsSucceeded(projects));
+        const normalizedData = normalize(projects, [projectSchema]);
+
+        dispatch(receiveEntities(normalizedData));
+
         if (!getState().page.currentProjectId) {
           const defaultProjectId = projects[0].id;
           dispatch(setCurrentProjectId(defaultProjectId));
@@ -144,5 +135,17 @@ export function setCurrentProjectId(id) {
     payload: {
       id,
     },
+  };
+}
+
+const taskSchema = new schema.Entity("tasks");
+const projectSchema = new schema.Entity("projects", {
+  tasks: [taskSchema],
+});
+
+function receiveEntities(entities) {
+  return {
+    type: "RECEIVE_ENTITIES",
+    payload: entities,
   };
 }

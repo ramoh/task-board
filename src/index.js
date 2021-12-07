@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { projects, page } from "./reducers";
+import { projects, page, tasks } from "./reducers";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import createSagaMiddleware from "@redux-saga/core";
@@ -16,6 +16,7 @@ const sagaMiddleware = createSagaMiddleware();
 const rootReducer = (state = {}, action) => {
   return {
     projects: projects(state.projects, action),
+    tasks: tasks(state.tasks, action),
     page: page(state.page, action),
   };
 };

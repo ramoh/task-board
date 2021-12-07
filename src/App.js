@@ -12,14 +12,14 @@ import "./App.css";
 import FlashMessage from "./components/FlashMessage";
 import Header from "./components/Header";
 import TaskPage from "./components/TasksPage";
-import { getGroupedAndFilteredTasks } from "./reducers";
+import { getGroupedAndFilteredTasks, getProjects } from "./reducers";
 
 const mapStateToProps = (state) => {
-  const { isLoading, error, items } = state.projects;
+  const { isLoading, error } = state.projects;
 
   return {
     tasks: getGroupedAndFilteredTasks(state),
-    projects: items,
+    projects: getProjects(state),
     isLoading,
     error,
   };

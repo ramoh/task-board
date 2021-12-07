@@ -11,24 +11,34 @@
   ],
   "tasks": [
     {
-      "id": 2,
-      "title": "Peace on Earth",
-      "description": "No big deal.",
-      "status": "In Progress",
-      "timer": 132,
-      "projectId": 2,
-      "created": "2021-11-27T11:55:17.833Z",
-      "lastModified": "2021-11-27T11:55:17.833Z"
+      "title": "Test1",
+      "description": "This is test1",
+      "status": "Unstarted",
+      "created": "2021-12-07T14:42:33.853Z",
+      "lastModified": "2021-12-07T16:00:52.572Z",
+      "timer": 0,
+      "projectId": 1,
+      "id": 4
     },
     {
-      "id": 3,
-      "title": "Create Facebook for dogs",
-      "description": "The hottest new social network",
+      "title": "Random2",
+      "description": "This is random2",
       "status": "Completed",
-      "timer": 332,
-      "created": "2021-11-27T11:55:17.833Z",
-      "lastModified": "2021-11-27T11:55:17.833Z",
-      "projectId": 1
+      "created": "2021-12-07T15:42:56.782Z",
+      "lastModified": "2021-12-07T16:01:01.282Z",
+      "timer": 12,
+      "projectId": 1,
+      "id": 6
+    },
+    {
+      "title": "Bring milk",
+      "description": "Please bring milk ",
+      "status": "Unstarted",
+      "created": "2021-12-07T16:04:50.646Z",
+      "lastModified": "2021-12-07T16:05:02.394Z",
+      "timer": 5,
+      "projectId": 2,
+      "id": 7
     }
   ]
 }

@@ -1,27 +1,37 @@
 import { createSelector } from "reselect";
 import { TASK_STATUSES } from "../constants";
 
-const intialState = {
+const initialTasksState = {
   items: [],
   isLoading: false,
   error: null,
 };
 
-export function projects(state = intialState, action) {
+export function tasks(state = initialTasksState, action) {
   switch (action.type) {
-    case "FETCH_PROJECTS_STARTED": {
+    case "RECEIVE_ENTITIES": {
+      const { entities } = action.payload;
+      if (entities && entities.tasks) {
+        return {
+          ...state,
+          isLoading: false,
+          items: entities.tasks,
+        };
+      }
+      return state;
+    }
+    case "TIMER_INCREMENT": {
+      const task = state.items[action.payload.taskId];
+      const newTask = { ...task, timer: task.timer + 1 };
       return {
         ...state,
-        isLoading: true,
+        items: {
+          ...state.items,
+          [newTask.id]: newTask,
+        },
       };
     }
-    case "FETCH_PROJECTS_SUCCEEDED": {
-      return {
-        ...state,
-        isLoading: false,
-        items: action.payload.projects,
-      };
-    }
+
     case "FETCH_TASKS_FAILED": {
       return {
         ...state,
@@ -42,77 +52,111 @@ export function projects(state = intialState, action) {
         tasks: action.payload.tasks,
       };
     }
+    case "EDIT_TASK_SUCCEEDED":
     case "CREATE_TASK_SUCCEEDED": {
       const { task } = action.payload;
-      const projectIndex = state.items.findIndex(
-        (project) => project.id === task.projectId,
-      );
 
-      const project = state.items[projectIndex];
-      const nextProject = {
-        ...project,
-        tasks: project.tasks.concat(task),
+      const nextTasks = {
+        ...state.items,
+        [task.id]: task,
       };
+
       return {
         ...state,
-        items: [
-          ...state.items.slice(0, projectIndex),
-          nextProject,
-          ...state.items.slice(projectIndex + 1),
-        ],
+        items: nextTasks,
       };
     }
     case "DELETE_TASK_SUCCEEDED": {
-      debugger;
-      const { payload } = action;
-
-      const nextTasks = state.tasks.filter((task) => task.id !== payload.id);
+      const { id } = action.payload;
+      const nextTasks = Object.keys(state.items)
+        .filter((key) => {
+          console.log("I am here");
+          return parseInt(key) !== id;
+        })
+        .reduce((obj, key) => {
+          obj[key] = state.items[key];
+          return obj;
+        }, {});
       return {
         ...state,
-        tasks: nextTasks,
+        items: nextTasks,
       };
-    }
-    case "EDIT_TASK_SUCCEEDED": {
-      const { task } = action.payload;
-
-      const projectIndex = state.items.findIndex(
-        (project) => project.id === task.projectId,
-      );
-
-      const project = state.items[projectIndex];
-
-      const taskIndex = project.tasks.findIndex((t) => t.id === task.id);
-      const nextProject = {
-        ...project,
-        tasks: [
-          ...project.tasks.slice(0, taskIndex),
-          task,
-          ...project.tasks.slice(taskIndex + 1),
-        ],
-      };
-
-      return {
-        ...state,
-        items: [
-          ...state.items.slice(0, projectIndex),
-          nextProject,
-          ...state.items.slice(projectIndex + 1),
-        ],
-      };
-    }
-    case "TIMER_INCREMENT": {
-      const nextTasks = state.tasks.map((task) => {
-        if (task.id === action.payload.taskId) {
-          return { ...task, timer: task.timer + 1 };
-        }
-        return task;
-      });
-      return { ...state, tasks: nextTasks };
     }
 
     default: {
       return state;
     }
+  }
+}
+
+const initialProjectsState = {
+  items: {},
+  isLoading: false,
+  error: null,
+};
+
+export function projects(state = initialProjectsState, action) {
+  switch (action.type) {
+    case "RECEIVE_ENTITIES": {
+      const { entities } = action.payload;
+      if (entities && entities.projects) {
+        return {
+          ...state,
+          isLoading: false,
+          items: entities.projects,
+        };
+      }
+      return state;
+    }
+    case "FETCH_PROJECTS_STARTED": {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case "FETCH_PROJECTS_SUCCEEDED": {
+      return {
+        ...state,
+        isLoading: false,
+        items: action.payload.projects,
+      };
+    }
+    case "CREATE_TASK_SUCCEEDED": {
+      const { task } = action.payload;
+      const project = state.items[task.projectId];
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [task.projectId]: {
+            ...project,
+            tasks: project.tasks.concat(task.id),
+          },
+        },
+      };
+    }
+    case "DELETE_TASK_SUCCEEDED": {
+      const { id } = action.payload;
+      const projId = Object.keys(state.items).filter((projectId) => {
+        const project = state.items[projectId];
+        return project.tasks.includes(id);
+      })[0];
+
+      const newTasks = state.items[projId].tasks.filter(
+        (taskId) => taskId !== id,
+      );
+      const nextProject = { ...state.items[projId], tasks: newTasks };
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [nextProject.id]: nextProject,
+        },
+      };
+    }
+
+    default:
+      return state;
   }
 }
 
@@ -146,13 +190,13 @@ const getSearchTerm = (state) => {
 };
 
 const getTasksByProjectId = (state) => {
-  if (!state.page.currentProjectId) {
+  const { currentProjectId } = state.page;
+
+  if (!currentProjectId || !state.projects.items[currentProjectId]) {
     return [];
   }
-  const currentProject = state.projects.items.find(
-    (project) => project.id === state.page.currentProjectId,
-  );
-  return currentProject.tasks;
+  const taskIds = state.projects.items[currentProjectId].tasks;
+  return taskIds.map((id) => state.tasks.items[id]);
 };
 
 export const getFilteredTasks = createSelector(
@@ -174,3 +218,9 @@ export const getGroupedAndFilteredTasks = createSelector(
     return grouped;
   },
 );
+
+export const getProjects = (state) => {
+  return Object.keys(state.projects.items).map((id) => {
+    return state.projects.items[id];
+  });
+};

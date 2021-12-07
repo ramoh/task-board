@@ -9,14 +9,16 @@ const Header = ({ projects, onCurrentProjectChange }) => {
 
   return (
     <div className="project-item">
-      <label for="projects">Project: </label>
-      <select
-        id="projects"
-        onChange={onCurrentProjectChange}
-        className="project-menu"
-      >
-        {projectOptions}
-      </select>
+      <label>
+        Project:
+        <select
+          id="projects"
+          onChange={onCurrentProjectChange}
+          className="project-menu"
+        >
+          {projectOptions}
+        </select>
+      </label>
     </div>
   );
 };

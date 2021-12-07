@@ -7843,6 +7843,11 @@
     "query-string" "^4.1.0"
     "sort-keys" "^1.0.0"
 
+"normalizr@^3.6.1":
+  "integrity" "sha512-8iEmqXmPtll8PwbEFrbPoDxVw7MKnNvt3PZzR2Xvq9nggEEOgBlNICPXYzyZ4w4AkHUzCU998mdatER3n2VaMA=="
+  "resolved" "https://registry.npmjs.org/normalizr/-/normalizr-3.6.1.tgz"
+  "version" "3.6.1"
+
 "npm-run-path@^2.0.0":
   "integrity" "sha1-NakjLfo11wZ7TLLd8jV7GHFTbF8="
   "resolved" "https://registry.npmjs.org/npm-run-path/-/npm-run-path-2.0.2.tgz"
