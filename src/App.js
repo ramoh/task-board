@@ -16,7 +16,6 @@ import { getGroupedAndFilteredTasks, getProjects } from "./reducers";
 
 const mapStateToProps = (state) => {
   const { isLoading, error } = state.projects;
-
   return {
     tasks: getGroupedAndFilteredTasks(state),
     projects: getProjects(state),

@@ -33,10 +33,10 @@
     {
       "title": "Bring milk",
       "description": "Please bring milk ",
-      "status": "Unstarted",
+      "status": "Completed",
       "created": "2021-12-07T16:04:50.646Z",
-      "lastModified": "2021-12-07T16:05:02.394Z",
-      "timer": 5,
+      "lastModified": "2021-12-13T08:35:50.599Z",
+      "timer": 14,
       "projectId": 2,
       "id": 7
     }

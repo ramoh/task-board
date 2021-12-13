@@ -102,13 +102,12 @@ function fetchProjectsStarted(boards) {
 }
 
 function fetchProjectsFailed(err) {
-  return { type: "FETCH_PROJECTS_FAILED", payload: { err } };
+  return { type: "FETCH_PROJECTS_FAILED", payload: { error: err.message } };
 }
 
 export function fetchProjects() {
   return (dispatch, getState) => {
     dispatch(fetchProjectsStarted());
-
     return api
       .fetchProjects()
       .then((resp) => {
@@ -124,7 +123,7 @@ export function fetchProjects() {
       })
       .catch((err) => {
         console.error(err);
-        fetchProjectsFailed(err);
+        dispatch(fetchProjectsFailed(err));
       });
   };
 }

@@ -31,7 +31,6 @@ export function tasks(state = initialTasksState, action) {
         },
       };
     }
-
     case "FETCH_TASKS_FAILED": {
       return {
         ...state,
@@ -133,6 +132,13 @@ export function projects(state = initialProjectsState, action) {
             tasks: project.tasks.concat(task.id),
           },
         },
+      };
+    }
+    case "FETCH_PROJECTS_FAILED": {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.error,
       };
     }
     case "DELETE_TASK_SUCCEEDED": {
